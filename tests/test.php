@@ -2,6 +2,8 @@
 
 require_once __DIR__ . '/../vendor/autoload.php'; // Autoload files using Composer autoload
 
-use HelloWorld\SayHello;
+use Zipcode\Zipcode;
 
-echo SayHello::world();
+$zipcode = Zipcode::get(33024);
+
+var_dump($zipcode);
