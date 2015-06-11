@@ -17,6 +17,13 @@ class Zipcode{
         return $zipcode->parse($data);
     }
 
+    public static function near($zip, $distance){
+        $zipcode = new self();
+        $data = file_get_contents($zipcode->getConfig('api_url').'/near/'.$zip.'/'.$distance.'?api_key='.$zipcode->getConfig('api_key'));
+
+        return json_decode($data);
+    }
+
     public function getConfig($property){
         return $this->config[$property];
     }

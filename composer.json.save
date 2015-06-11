@@ -1,0 +1,14 @@
+{
+    "name": "candrews/zipcodes",
+    "description": "Zipcode library connecting to zipcode api.",
+    "authors": [
+        {
+            "name": "Clinton Andrews",
+            "email": "candrews800@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+
+}
+}
