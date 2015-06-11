@@ -6,4 +6,6 @@ use Zipcode\Zipcode;
 
 $zipcode = Zipcode::near(33024,25);
 
-var_dump($zipcode);
+foreach($zipcode as $zip){
+    echo $zip . ', ';
+}
