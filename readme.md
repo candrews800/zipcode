@@ -1,4 +1,1 @@
-To do:
-1. Implement near method and
-2. Implement search method
-3. Testing
+Zipcode Library for zzipcode.com
