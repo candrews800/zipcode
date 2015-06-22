@@ -4,6 +4,8 @@ require_once __DIR__ . '/../vendor/autoload.php'; // Autoload files using Compos
 
 use Zipcode\Zipcode;
 
-$zipcode = Zipcode::get("33024");
+$zipcodes = Zipcode::get("33024, 27615", 5);
 
-var_dump($zipcode);
+foreach($zipcodes[1]->near as $zip){
+    var_dump($zip->city);
+}

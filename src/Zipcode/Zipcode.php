@@ -11,12 +11,17 @@ class Zipcode{
         $this->config = include __DIR__ .'/../config.php';
     }
 
-    public static function get($zip){
+    public static function get($zip, $nearDistance = false){
         $zipcode = new self();
 
-        $client = new Client();
+        $url = $zipcode->getConfig('api_url') . '/get/'.$zip. '?api_key='.$zipcode->getConfig('api_key');
+        if($nearDistance){
+            $url .= '&embed=near:'.$nearDistance;
+        }
+
         try{
-            $res = $client->get($zipcode->getConfig('api_url') . '/get/'.$zip. '?api_key='.$zipcode->getConfig('api_key'));
+            $client = new Client();
+            $res = $client->get($url);
         } catch(RequestException $e){
             if ($e->hasResponse()) {
                 return $e->getResponse()->getBody()->getContents();
@@ -24,10 +29,6 @@ class Zipcode{
         }
 
         $data = json_decode($res->getBody()->getContents());
-
-        if(isset($data->error)){
-            return 'Errors found.';
-        }
 
         foreach($data->data as $zip){
             $zipcode = new self;
@@ -50,7 +51,15 @@ class Zipcode{
 
     public function parse($data){
         foreach($data as $key=>$value){
-            $this->$key = $value;
+            if($key == 'near'){
+                foreach($value as $zip){
+                    $zipcode = new self;
+                    $this->near[] = $zipcode->parse($zip);
+                }
+            }
+            else{
+                $this->$key = $value;
+            }
         }
 
         return $this;
