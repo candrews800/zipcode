@@ -33,10 +33,14 @@ class ZipcodeApi{
         return $this->query($url);
     }
 
-    public function near($zipcode, $distance){
+    public function near($zipcode, $distance, $details = false){
         $url = $this->getConfig('api_url');
         $url.= '/near/' . $zipcode . '/' . $distance;
         $url.= '?api_key=' . $this->getConfig('api_key');
+
+        if($details){
+            $url.= '&details=true';
+        }
 
         return $this->query($url);
     }
@@ -50,7 +54,6 @@ class ZipcodeApi{
     }
 
     private function query($url){
-        echo $url;
         try{
             $client = new Client();
             $res = $client->get($url);

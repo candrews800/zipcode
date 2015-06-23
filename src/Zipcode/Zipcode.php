@@ -12,32 +12,25 @@ class Zipcode{
 
         $data = $response->getContent();
 
-        foreach($data as $zip){
-            $zipcode = new self;
-            $zips[] = $zipcode->parse($zip);
-        }
-
-        return $zips;
+        return Zipcode::assembleFrom($data);
     }
 
-    public static function near($zip, $distance){
+    public static function near($zip, $distance, $details = true){
         $api = ZipcodeApi::getInstance();
-        $response = $api->near($zip, $distance);
+
+        $response = $api->near($zip, $distance, $details);
 
         if($response->hasError()){
             return $response->getError();
         }
 
-        $data = $response->getContent();
-
-        return $data;
-
-        foreach($data as $zip){
-            $zipcode = new self;
-            $zips[] = $zipcode->parse($zip);
+        if( ! $details){
+            return $response->getContent();
         }
 
-        return $zips;
+        $data = $response->getContent();
+
+        return Zipcode::assembleFrom($data);
     }
 
     public static function search($location){
@@ -50,6 +43,10 @@ class Zipcode{
 
         $data = $response->getContent();
 
+        return Zipcode::assembleFrom($data);
+    }
+
+    public static function assembleFrom($data){
         foreach($data as $zip){
             $zipcode = new self;
             $zips[] = $zipcode->parse($zip);

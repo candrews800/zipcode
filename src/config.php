@@ -1,6 +1,6 @@
 <?php
 
 return [
-    'api_url' => 'http://zzipcode.com',
-    'api_key' => '$2y$10$6V.WEU0ZSNehPXyv0Vk3pu6RWiAWWapxtqi60q1f82z82YCMcdNmu'
+    'api_url' => 'http://zipcode.app',
+    'api_key' => '$2y$10$dWxan3fVpbW3zY2AZiTNzeY9279clPmA7397iKTaqdx19RrPQlaLq'
 ];
