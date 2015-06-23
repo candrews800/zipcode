@@ -1,36 +1,18 @@
 <?php namespace Zipcode;
 
-use GuzzleHttp\Client;
-use GuzzleHttp\Exception\RequestException;
-
 class Zipcode{
 
-    private $config;
+    public static function get($zip, $distance = false){
+        $api = ZipcodeApi::getInstance();
+        $response = $api->get($zip, $distance);
 
-    public function __construct(){
-        $this->config = include __DIR__ .'/../config.php';
-    }
-
-    public static function get($zip, $nearDistance = false){
-        $zipcode = new self();
-
-        $url = $zipcode->getConfig('api_url') . '/get/'.$zip. '?api_key='.$zipcode->getConfig('api_key');
-        if($nearDistance){
-            $url .= '&embed=near:'.$nearDistance;
+        if($response->hasError()){
+            return $response->getError();
         }
 
-        try{
-            $client = new Client();
-            $res = $client->get($url);
-        } catch(RequestException $e){
-            if ($e->hasResponse()) {
-                return $e->getResponse()->getBody()->getContents();
-            }
-        }
+        $data = $response->getContent();
 
-        $data = json_decode($res->getBody()->getContents());
-
-        foreach($data->data as $zip){
+        foreach($data as $zip){
             $zipcode = new self;
             $zips[] = $zipcode->parse($zip);
         }
@@ -39,14 +21,41 @@ class Zipcode{
     }
 
     public static function near($zip, $distance){
-        $zipcode = new self();
-        $data = file_get_contents($zipcode->getConfig('api_url').'/near/'.$zip.'/'.$distance.'?api_key='.$zipcode->getConfig('api_key'));
+        $api = ZipcodeApi::getInstance();
+        $response = $api->near($zip, $distance);
 
-        return json_decode($data);
+        if($response->hasError()){
+            return $response->getError();
+        }
+
+        $data = $response->getContent();
+
+        return $data;
+
+        foreach($data as $zip){
+            $zipcode = new self;
+            $zips[] = $zipcode->parse($zip);
+        }
+
+        return $zips;
     }
 
-    public function getConfig($property){
-        return $this->config[$property];
+    public static function search($location){
+        $api = ZipcodeApi::getInstance();
+        $response = $api->search($location);
+
+        if($response->hasError()){
+            return $response->getError();
+        }
+
+        $data = $response->getContent();
+
+        foreach($data as $zip){
+            $zipcode = new self;
+            $zips[] = $zipcode->parse($zip);
+        }
+
+        return $zips;
     }
 
     public function parse($data){

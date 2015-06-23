@@ -74,12 +74,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/guzzle/promises.git",
-                "reference": "61f950b4e8bed600f0c54e7a69e9e085bb5e76a9"
+                "reference": "156f6915a89ca2cc9a3b36abef65f336ce68c754"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/promises/zipball/61f950b4e8bed600f0c54e7a69e9e085bb5e76a9",
-                "reference": "61f950b4e8bed600f0c54e7a69e9e085bb5e76a9",
+                "url": "https://api.github.com/repos/guzzle/promises/zipball/156f6915a89ca2cc9a3b36abef65f336ce68c754",
+                "reference": "156f6915a89ca2cc9a3b36abef65f336ce68c754",
                 "shasum": ""
             },
             "require": {
@@ -117,7 +117,7 @@
             "keywords": [
                 "promise"
             ],
-            "time": "2015-05-28 00:34:40"
+            "time": "2015-06-16 01:16:05"
         },
         {
             "name": "guzzlehttp/psr7",
@@ -125,12 +125,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/guzzle/psr7.git",
-                "reference": "962735c754f2a562a619b456a3aa4e614f0e5360"
+                "reference": "644db73bfa1571af785172887836d6ec01d787ed"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/psr7/zipball/962735c754f2a562a619b456a3aa4e614f0e5360",
-                "reference": "962735c754f2a562a619b456a3aa4e614f0e5360",
+                "url": "https://api.github.com/repos/guzzle/psr7/zipball/644db73bfa1571af785172887836d6ec01d787ed",
+                "reference": "644db73bfa1571af785172887836d6ec01d787ed",
                 "shasum": ""
             },
             "require": {
@@ -175,7 +175,7 @@
                 "stream",
                 "uri"
             ],
-            "time": "2015-06-14 00:21:59"
+            "time": "2015-06-16 01:05:58"
         },
         {
             "name": "psr/http-message",
