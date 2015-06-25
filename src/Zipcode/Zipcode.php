@@ -2,9 +2,15 @@
 
 class Zipcode{
 
-    public static function get($zip, $distance = false){
+    public function __construct(){
+        if(func_num_args() == 1){
+            $this->zipcode = func_get_arg(0);
+        }
+    }
+
+    public function get($distance = false){
         $api = ZipcodeApi::getInstance();
-        $response = $api->get($zip, $distance);
+        $response = $api->get($this->zipcode, $distance);
 
         if($response->hasError()){
             return $response->getError();
@@ -12,13 +18,13 @@ class Zipcode{
 
         $data = $response->getContent();
 
-        return Zipcode::assembleFrom($data);
+        return $this->assembleFrom($data);
     }
 
-    public static function near($zip, $distance, $details = true){
+    public function near($distance, $details = true){
         $api = ZipcodeApi::getInstance();
 
-        $response = $api->near($zip, $distance, $details);
+        $response = $api->near($this->zipcode, $distance, $details);
 
         if($response->hasError()){
             return $response->getError();
@@ -30,10 +36,10 @@ class Zipcode{
 
         $data = $response->getContent();
 
-        return Zipcode::assembleFrom($data);
+        return $this->assembleFrom($data);
     }
 
-    public static function search($location){
+    public function search($location){
         $api = ZipcodeApi::getInstance();
         $response = $api->search($location);
 
@@ -43,23 +49,31 @@ class Zipcode{
 
         $data = $response->getContent();
 
-        return Zipcode::assembleFrom($data);
+        return $this->assembleFrom($data);
     }
 
-    public static function assembleFrom($data){
-        foreach($data as $zip){
-            $zipcode = new self;
-            $zips[] = $zipcode->parse($zip);
-        }
+    public function assembleFrom($data){
+        if(is_array($data) && sizeof($data) > 1){
+            foreach($data as $zip){
+                $zipcode = new self($zip['zipcode']);
+                $zips[] = $zipcode->parse($zip);
+            }
 
-        return $zips;
+            return $zips;
+        }
+        elseif(is_array($data)){
+            return $this->parse($data[0]);
+        }
+        else{
+            return $this->parse($data);
+        }
     }
 
     public function parse($data){
         foreach($data as $key=>$value){
             if($key == 'near'){
                 foreach($value as $zip){
-                    $zipcode = new self;
+                    $zipcode = new self($zip['zipcode']);
                     $this->near[] = $zipcode->parse($zip);
                 }
             }

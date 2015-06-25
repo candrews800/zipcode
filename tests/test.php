@@ -4,6 +4,7 @@ require_once __DIR__ . '/../vendor/autoload.php'; // Autoload files using Compos
 
 use Zipcode\Zipcode;
 
-$zipcodes = Zipcode::near(33024, 10);
+$zipcode = new Zipcode(33024);
+$zipcodes = $zipcode->near(10);
 
 var_dump($zipcodes);
