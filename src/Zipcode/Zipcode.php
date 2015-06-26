@@ -91,7 +91,7 @@ class Zipcode{
         $response = $api->distance($this->zipcode, $zipcode);
 
         if($response->hasError()){
-            return $response->getError();
+            return $this->setError($response);
         }
 
         $data = $response->getContent();
