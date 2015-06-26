@@ -53,6 +53,14 @@ class ZipcodeApi{
         return $this->query($url);
     }
 
+    public function distance($zipcode1, $zipcode2){
+        $url = $this->getConfig('api_url');
+        $url.= '/distance/' . $zipcode1 . '/' . $zipcode2;
+        $url.= '?api_key=' . $this->getConfig('api_key');
+
+        return $this->query($url);
+    }
+
     private function query($url){
         try{
             $client = new Client();

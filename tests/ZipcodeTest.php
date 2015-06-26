@@ -15,8 +15,9 @@ class ZipcodeTest extends PHPUnit_Framework_TestCase
      * @depends testGet
      */
     public function testGetWithNear(){
+        sleep(1);
         $zipcode = new Zipcode(33024);
-        $zipcode = $zipcode->get(5);
+        $zipcode = $zipcode->get(10);
 
         foreach($zipcode->near as $nearbyZipcode){
             $nearbyZipcodeList[] = $nearbyZipcode->zipcode;
@@ -29,14 +30,16 @@ class ZipcodeTest extends PHPUnit_Framework_TestCase
      * @depends testGet
      */
     public function testGetWithInvalidZipcode(){
+        sleep(1);
         $zipcode = new Zipcode(123456);
 
         $this->assertStringStartsWith('Error', $zipcode->get());
     }
 
     public function testGetNearby(){
+        sleep(1);
         $zipcode = new Zipcode(33024);
-        $zipcodes = $zipcode->near(5, false);
+        $zipcodes = $zipcode->near(10, false);
 
         $this->assertContains(33328, $zipcodes);
     }
@@ -44,7 +47,19 @@ class ZipcodeTest extends PHPUnit_Framework_TestCase
     /**
      * @depends testGetNearby
      */
+    public function testGetNearbyWithInvalidZipcode(){
+        sleep(1);
+        $zipcode = new Zipcode(123456);
+        $zipcodes = $zipcode->near(5, false);
+
+        $this->assertStringStartsWith('Error', $zipcodes);
+    }
+
+    /**
+     * @depends testGetNearby
+     */
     public function testGetNearbyWithDetails(){
+        sleep(1);
         $zipcode = new Zipcode(33024);
         $zipcodes = $zipcode->near(25, true);
 
@@ -56,6 +71,7 @@ class ZipcodeTest extends PHPUnit_Framework_TestCase
     }
 
     public function testSearchLocation(){
+        sleep(1);
         $zipcode = new Zipcode();
         $zipcodes = $zipcode->search('Hollywood, FL');
 
@@ -64,5 +80,14 @@ class ZipcodeTest extends PHPUnit_Framework_TestCase
         }
 
         $this->assertContains(33024, $nearbyZipcodeList);
+    }
+
+    public function testGetDistance(){
+        sleep(1);
+        $zipcode = new Zipcode(33024);
+        $distance = $zipcode->distance(33328);
+
+        $this->assertGreaterThan(5, $distance);
+        $this->assertLessThan(10, $distance);
     }
 }
